@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warda Butt - Contact</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script type="text/babel">
+        async function fetchMenuItems() {
+            const response = await fetch('menu.json');
+            return response.json();
+        }
+
+        function Navbar({ menuItems }) {
+            return (
+                <nav className="navbar">
+                    <ul id="menu">
+                        {menuItems.map(item => (
+                            <li key={item.link}>
+                                <a href={item.link} title={item.titleAttr}>{item.title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            );
+        }
+
+        function ContactForm() {
+            const [message, setMessage] = React.useState("");
+
+            const handleSubmit = (event) => {
+                event.preventDefault();
+                const form = event.target;
+                const data = new FormData(form);
+
+                fetch('contact.php', {
+                    method: 'POST',
+                    body: data,
+                })
+                .then(response => response.text())
+                .then(text => setMessage(text));
+            };
+
+            return (
+                <section className="container">
+                    <h1>Contact Me</h1>
+                    {message && <div className="alert-success">{message}</div>}
+                    <form onSubmit={handleSubmit} className="contact-form" noValidate>
+                        <div className="form-group">
+                            <label htmlFor="name">Name:</label>
+                            <input type="text" id="name" name="name" required />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email:</label>
+                            <input type="email" id="email" name="email" required />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="subject">Subject:</label>
+                            <input type="text" id="subject" name="subject" required />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="message">Message:</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" className="button">Submit</button>
+                    </form>
+                </section>
+            );
+        }
+
+        function Footer() {
+            return (
+                <footer className="container">
+                    <p>&copy; 2024 Warda Butt</p>
+                    <div className="social-icons">
+                        <a href="#" className="social-icon twitter"><i className="fa fa-twitter"></i></a>
+                        <a href="#" className="social-icon instagram"><i className="fa fa-instagram"></i></a>
+                    </div>
+                </footer>
+            );
+        }
+
+        function App() {
+            const [menuItems, setMenuItems] = React.useState([]);
+
+            React.useEffect(() => {
+                fetchMenuItems().then(data => setMenuItems(data.menu));
+            }, []);
+
+            return (
+                <div>
+                    <Navbar menuItems={menuItems} />
+                    <ContactForm />
+                    <Footer />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>

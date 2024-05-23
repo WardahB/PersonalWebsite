@@ -1,0 +1,22 @@
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem 0;
+    background-color: #343a40;
+    a {
+        color: #f8f9fa;
+        padding: 0.5rem 1rem;
+        &:hover {
+            background-color: #495057;
+        }
+    }
+}
+
+// Footer
+footer {
+    background-color: #343a40;
+    color: #f8f9fa;
+    text-align: center;
+    padding: 1rem 0;
+}

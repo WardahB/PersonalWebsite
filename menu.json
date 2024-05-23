@@ -1,0 +1,26 @@
+{
+    "menu": [
+      {
+        "title": "Home",
+        "link": "index.html",
+        "titleAttr": "Go to Home Page"
+      },
+      {
+        "title": "Who I Am",
+        "link": "about.html",
+        "titleAttr": "Learn more about me"
+      },
+      
+      {
+        "title": "Works",
+        "link": "works.html",
+        "titleAttr": "Check out my works"
+      },
+      {
+        "title": "Contact",
+        "link": "contact.html",
+        "titleAttr": "Contact me"
+      }
+    ]
+  }
+  

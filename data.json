@@ -1,0 +1,27 @@
+{
+    "works": [
+        {
+            "id": 1,
+            "title": "Python Projects",
+            "description": "I created many small projects in Python which is a high-level, general-purpose programming language. ",
+            "date": "01-01-2023",
+            "image": "assets/images/Python.png"
+        }
+        ,
+        {
+            "id": 2,
+            "title": "Visual Programming",
+            "description": "Windows Forms is a UI framework for building Windows desktop apps which I used to create My semester Project",
+            "date": "05-01-2023",
+            "image": "assets/images/vs programming.png"
+       
+        },
+        {
+            "id": 3,
+            "title": "Computer Networks",
+            "description": "Computer networking refers to connected devices, ranging from PCs and smartphones to doorbells and thermostats, that communicate with one another and that mode was build by me",
+            "date": "10-10-2023",
+            "image": "assets/images/Cn.png"
+        }
+    ]
+}

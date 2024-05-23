@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warda Butt - Who I Am</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script type="text/babel">
+        async function fetchMenuItems() {
+            const response = await fetch('menu.json');
+            return response.json();
+        }
+
+        function Navbar({ menuItems }) {
+            return (
+                <nav className="navbar">
+                    <ul id="menu">
+                        {menuItems.map(item => (
+                            <li key={item.link}>
+                                <a href={item.link} title={item.titleAttr}>{item.title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            );
+        }
+
+        function AboutSection() {
+            return (
+                <section className="about-section">
+                    <div className="about-image">
+                        <img src="assets/images/myphoto.png" alt="Suleimane Haidara" />
+                    </div>
+                    <div className="about-content">
+                        <h1>About Warda Butt</h1>
+                        <p>My name is Warda Butt, a full stack student with a passion for web development. With experience in both front-end and back-end technologies, I aim to deliver high-quality web solutions. My journey in web development started with a keen interest in technology and the desire to create. Over the years, I've honed my skills and expanded my knowledge, working on a range of projects from simple websites to complex web applications.</p>
+                    </div>
+                </section>
+            );
+        }
+
+        function Footer() {
+            return (
+                <footer className="container">
+                    <p>&copy; 2023 Suleimane Haidara</p>
+                </footer>
+            );
+        }
+
+        function App() {
+            const [menuItems, setMenuItems] = React.useState([]);
+
+            React.useEffect(() => {
+                fetchMenuItems().then(data => setMenuItems(data.menu));
+            }, []);
+
+            return (
+                <div>
+                    <Navbar menuItems={menuItems} />
+                    <AboutSection />
+                    <Footer />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>

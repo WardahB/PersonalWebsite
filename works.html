@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warda Butt - Works</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script type="text/babel">
+        async function fetchMenuItems() {
+            const response = await fetch('menu.json');
+            return response.json();
+        }
+
+        async function fetchWorks() {
+            const response = await fetch('data.json');
+            return response.json();
+        }
+
+        function Navbar({ menuItems }) {
+            return (
+                <nav className="navbar">
+                    <ul id="menu">
+                        {menuItems.map(item => (
+                            <li key={item.link}>
+                                <a href={item.link} title={item.titleAttr}>{item.title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            );
+        }
+
+        function WorksSection({ works }) {
+            return (
+                <section className="works-section">
+                    <h1>List of Works Carried Out</h1>
+                    <div className="works-container">
+                        {works.map(work => (
+                            <div className="work-card" key={work.id}>
+                                <a href={`work_view.html?id=${work.id}`}>
+                                    <h2>{work.title}</h2>
+                                    <p>{work.description}</p>
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        }
+
+        function Footer() {
+            return (
+                <footer className="container">
+                    <p>&copy; 2024 Warda Butt</p>
+                </footer>
+            );
+        }
+
+        function App() {
+            const [menuItems, setMenuItems] = React.useState([]);
+            const [works, setWorks] = React.useState([]);
+
+            React.useEffect(() => {
+                fetchMenuItems().then(data => setMenuItems(data.menu));
+                fetchWorks().then(data => setWorks(data.works));
+            }, []);
+
+            return (
+                <div>
+                    <Navbar menuItems={menuItems} />
+                    <WorksSection works={works} />
+                    <Footer />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>

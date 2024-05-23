@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warda Butt - Work View</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+       .work-view {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgb(10, 10, 10);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+.work-view img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+.work-view h1 {
+    margin-top: 0;
+    color: #fcfcfc;
+}
+.work-view p {
+    line-height: 1.6;
+    color: #fcf9f9;
+}
+.work-view p strong {
+    color: #f8f2f2;
+}
+    </style>
+</head>
+
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script type="text/babel">
+        function getWorkIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        async function fetchMenuItems() {
+            const response = await fetch('menu.json');
+            return response.json();
+        }
+
+        async function fetchWorkById(id) {
+            const response = await fetch('data.json');
+            const data = await response.json();
+            return data.works.find(work => work.id === parseInt(id));
+        }
+
+        function Navbar({ menuItems }) {
+            return (
+                <nav className="navbar">
+                    <ul id="menu">
+                        {menuItems.map(item => (
+                            <li key={item.link}>
+                                <a href={item.link} title={item.titleAttr}>{item.title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            );
+        }
+
+        function WorkView({ work }) {
+            if (!work) {
+                return <p>Loading...</p>;
+            }
+
+            return (
+                <div className="work-view">
+                    <h1>{work.title}</h1>
+                    <img src={work.image} alt={work.title} />
+                    <p>{work.description}</p>
+                    <p><strong>Date:</strong> {work.date}</p>
+                </div>
+            );
+        }
+
+        function Footer() {
+            return (
+                <footer>
+                    <p>&copy; 2024 Warda Butt</p>
+                </footer>
+            );
+        }
+
+        function App() {
+            const [menuItems, setMenuItems] = React.useState([]);
+            const [work, setWork] = React.useState(null);
+
+            React.useEffect(() => {
+                fetchMenuItems().then(data => setMenuItems(data.menu));
+                const workId = getWorkIdFromUrl();
+                fetchWorkById(workId).then(setWork);
+            }, []);
+
+            return (
+                <div>
+                    <Navbar menuItems={menuItems} />
+                    <WorkView work={work} />
+                    <Footer />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warda Butt - Home</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script type="text/babel">
+        async function fetchMenuItems() {
+            const response = await fetch('menu.json');
+            return response.json();
+        }
+
+        function Navbar({ menuItems }) {
+            return (
+                <nav className="navbar">
+                    <ul id="menu">
+                        {menuItems.map(item => (
+                            <li key={item.link}>
+                                <a href={item.link} title={item.titleAttr}>{item.title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            );
+        }
+
+        function Hero() {
+            return (
+                <section className="hero">
+                    <div className="hero-content-box">
+                        <h1>Welcome to My Personal Website</h1>
+                        <p>Hi, I'm Warda Butt, a full stack student. Explore my works and get to know more about me.</p>
+                    </div>
+                </section>
+            );
+        }
+
+        function About() {
+            return (
+                <section className="container">
+                    <h2>About Me</h2>
+                    <p>
+                        I'm a passionate full stack student aiming to craft digital solutions. My journey in the world of web development started with a simple HTML page, and now I'm diving deep into both front-end and back-end technologies. This website showcases some of the projects I've worked on and provides insights into my skills and experiences.
+                    </p>
+                    <a href="about.html" className="button">Learn More About Me</a>
+                </section>
+            );
+        }
+
+        function Footer() {
+            return (
+                <footer className="container">
+                    <p>&copy; 2024 Warda Butt</p>
+                </footer>
+            );
+        }
+
+        function App() {
+            const [menuItems, setMenuItems] = React.useState([]);
+
+            React.useEffect(() => {
+                fetchMenuItems().then(data => setMenuItems(data.menu));
+            }, []);
+
+            return (
+                <div>
+                    <Navbar menuItems={menuItems} />
+                    <Hero />
+                    <About />
+                    <Footer />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>
