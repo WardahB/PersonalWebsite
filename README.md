@@ -14,6 +14,7 @@ To clone this repository, use the following command:
 
 ```bash
 git clone https://github.com/WardahB/PersonalWebsite.git
+```
 
 Running Locally
 To run this website locally, follow these steps:
